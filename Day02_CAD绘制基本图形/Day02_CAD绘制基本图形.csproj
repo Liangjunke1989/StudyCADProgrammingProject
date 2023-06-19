@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="LineExam.cs" />
     <Compile Include="LJK_AddEntityTool.cs" />
+    <Compile Include="LJK_LineExam_Study.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
