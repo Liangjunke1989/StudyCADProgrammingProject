@@ -32,9 +32,9 @@ namespace Day02_CAD绘制基本图形
             Database db = HostApplicationServices.WorkingDatabase;
             Editor editor = Application.DocumentManager.MdiActiveDocument.Editor;
             //------------------------------------------测试二---------------------------------------------
-            Line line02 = new Line(new Point3d(500, 100, 0), new Point3d(600, 100, 0));
-            Line line03 = new Line(new Point3d(500, 200, 0), new Point3d(600, 200, 0));
-            Line line04 = new Line(new Point3d(600, 200, 0), new Point3d(500, 100, 0));
+            Line line02 = new Line(new Point3d(0, 0, 0), new Point3d(500, 500, 0));
+            Line line03 = new Line(new Point3d(500, 500, 0), new Point3d(500, 0, 0));
+            Line line04 = new Line(new Point3d(500, 0, 0), new Point3d(0, 0, 0));
             List<ObjectId> ids01 = db.AddEntityToModelSpace01(line02, line03, line04);
             editor.WriteMessage("----使用集合的方式，三条线段完成绘制！！！LJK，测试完成！---");
         }
@@ -43,9 +43,10 @@ namespace Day02_CAD绘制基本图形
         {
             Database db = HostApplicationServices.WorkingDatabase;
             Editor editor = Application.DocumentManager.MdiActiveDocument.Editor;
-            Line line05 = new Line(new Point3d(1000, 100, 0), new Point3d(1200, 100, 0));
-            Line line06 = new Line(new Point3d(1200, 200, 0), new Point3d(1500, 200, 0));
-            Line line07 = new Line(new Point3d(1500, 200, 0), new Point3d(1000, 100, 0));
+            //------------------------------------------测试三---------------------------------------------
+            Line line05 = new Line(new Point3d(500, 500, 0), new Point3d(1500, 500, 0));
+            Line line06 = new Line(new Point3d(1500, 500, 0), new Point3d(1500, 1000, 0));
+            Line line07 = new Line(new Point3d(1500, 1000, 0), new Point3d(2000, 1000, 0));
             ObjectId[] ids02 = db.AddEntityToModelSpace02(line05, line06, line07);
             editor.WriteMessage("----使用数组的方式，三条线段完成绘制！！！LJK，测试完成！---");
         }
