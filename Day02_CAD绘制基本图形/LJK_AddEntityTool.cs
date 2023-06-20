@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Autodesk.AutoCAD.Geometry;
 
 namespace Day02_CAD绘制基本图形
 {
     public static class LJK_AddEntityTool
     {
         /// <summary>
-        /// 将图形对象添加到图形文件中
+        /// 将一个图形对象添加到图形文件中
         /// </summary>
         /// <param name="db">图形数据库</param>
         /// <param name="entity">图形对象实体</param>
@@ -37,7 +38,7 @@ namespace Day02_CAD绘制基本图形
         }
 
         /// <summary>
-        /// 将图形对象添加到图形文件中方法01
+        /// 将多个图形对象添加到图形文件中方法（自己写的，测试数组和集合的区别）
         /// </summary>
         /// <param name="db">图形数据库</param>
         /// <param name="ents">图形对象实体，可变参数</param>
@@ -68,12 +69,12 @@ namespace Day02_CAD绘制基本图形
         }
 
         /// <summary>
-        /// 将图形对象添加到图形文件中方法02
+        /// 将多个图形对象添加到图形文件中方法
         /// </summary>
         /// <param name="db">图形数据库</param>
         /// <param name="ents">图形对象实体，可变参数</param>
         /// <returns>图形对象ObjectId数组</returns>
-        public static ObjectId[] AddEntityToModelSpace02(this Database db, params Entity[] ents)
+        public static ObjectId[] AddEntitiesToModelSpace(this Database db, params Entity[] ents)
         {
             ObjectId[] entityIds;
             //开启事务处理
@@ -96,6 +97,35 @@ namespace Day02_CAD绘制基本图形
                 trans.Commit();
             }
             return entityIds;
+        }
+
+        /// <summary>
+        /// 绘制直线01
+        /// </summary>
+        /// <param name="db">图形数据库</param>
+        /// <param name="startPoint">起点坐标</param>
+        /// <param name="endPoint">终点坐标</param>
+        /// <returns></returns>
+        public static ObjectId AddLineToModelSpace(this Database db, Point3d startPoint, Point3d endPoint)
+        {
+            return db.AddEntityToModelSpace(new Line(startPoint,endPoint));
+        }
+
+        /// <summary>
+        /// 绘制直线02
+        /// </summary>
+        /// <param name="db">图形数据库</param>
+        /// <param name="startPoint">起点坐标</param>
+        /// <param name="length">直线长度</param>
+        /// <param name="degree">与X轴正方向的角度</param>
+        /// <returns>图形对象的ObjectId</returns>
+        public static ObjectId AddLineToModelSpace(this Database db, Point3d startPoint, Double length, Double degree)
+        {
+            //通过起点坐标、空间夹角计算终点的坐标位置
+            double x = startPoint.X + length * Math.Cos(degree.DegreeToRadian());// (cosθ = x, sinθ = y)
+            double y= startPoint.Y + length * Math.Sin(degree.DegreeToRadian());  
+            Point3d endPoint = new Point3d(x,y,0);
+            return db.AddEntityToModelSpace(new Line(startPoint, endPoint));
         }
     }
 }

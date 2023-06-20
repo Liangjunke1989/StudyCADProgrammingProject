@@ -12,7 +12,7 @@ using Autodesk.AutoCAD.Runtime;
 namespace Day02_CAD绘制基本图形
 {
 
-    public class LJK_LineExam_Study
+    public class LJK_01_LineExam_Study
     {
         [CommandMethod("TestDrawOneLine")]
         public void TestDrawOneLineDemo00()
@@ -26,6 +26,7 @@ namespace Day02_CAD绘制基本图形
             ObjectId entityId = db.AddEntityToModelSpace(line01);//使用拓展方法
             editor.WriteMessage("---"+line01.BlockName+"已经绘制完成！！！LJK---");
         }
+
         [CommandMethod("TestDrawMultiSegmentLine01")]
         public void TestDrawMultiSegmentLineDemo01()
         {
@@ -38,6 +39,7 @@ namespace Day02_CAD绘制基本图形
             List<ObjectId> ids01 = db.AddEntityToModelSpace01(line02, line03, line04);
             editor.WriteMessage("----使用集合的方式，三条线段完成绘制！！！LJK，测试完成！---");
         }
+
         [CommandMethod("TestDrawMultiSegmentLine02")]
         public void TestDrawMultiSegmentLineDemo02()
         {
@@ -47,8 +49,22 @@ namespace Day02_CAD绘制基本图形
             Line line05 = new Line(new Point3d(500, 500, 0), new Point3d(1500, 500, 0));
             Line line06 = new Line(new Point3d(1500, 500, 0), new Point3d(1500, 1000, 0));
             Line line07 = new Line(new Point3d(1500, 1000, 0), new Point3d(2000, 1000, 0));
-            ObjectId[] ids02 = db.AddEntityToModelSpace02(line05, line06, line07);
+            ObjectId[] ids02 = db.AddEntitiesToModelSpace(line05, line06, line07);
             editor.WriteMessage("----使用数组的方式，三条线段完成绘制！！！LJK，测试完成！---");
+        }
+
+        [CommandMethod("TestDrawMultiSegmentLine03")]
+        public void TestDrawMultiSegmentLineDemo03()
+        {
+            Database db = HostApplicationServices.WorkingDatabase;
+            Editor editor = Application.DocumentManager.MdiActiveDocument.Editor;
+            //------------------------------------------测试四---------------------------------------------
+            Double lineLength = 1500;
+            Double lineAngle = 45;
+            db.AddLineToModelSpace(new Point3d(1000, 1000, 0), new Point3d(3000, 1000, 0));
+            db.AddLineToModelSpace(new Point3d(3000, 1000, 0), new Point3d(3000, 3000, 0));
+            db.AddLineToModelSpace(new Point3d(3000,3000, 0), lineLength, lineAngle);
+            editor.WriteMessage("----使用LJK程序开发的方式绘制直线完成绘制！！！LJK，测试完成！---");
         }
 
     }
